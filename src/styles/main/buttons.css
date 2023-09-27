@@ -1,0 +1,12 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.button {
+  background-color: hsl(0, 33%, 74%);
+  border: 1px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+}
