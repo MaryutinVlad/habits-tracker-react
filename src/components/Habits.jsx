@@ -1,10 +1,12 @@
 export default function Habits({
-  onAddHabits
+  data
 }) {
+
+  console.log(data)
 
   return (
     <div>
-      Here {onAddHabits}
+
     </div>
   )
 }

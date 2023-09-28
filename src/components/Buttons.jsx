@@ -1,24 +1,20 @@
-import { useState } from "react"
-
 export default function Buttons({
-  onAddHabit
+  onAddHabit,
+  slotsAvailable
 }) {
 
-  const [ habitSlots, setHabitSlots ] = useState(2)
-
   const addHabit = () => {
-    setHabitSlots(habitSlots - 1)
     onAddHabit()
   }
 
   return (
     <div className="buttons">
       <p>
-        Habit slots: {habitSlots}
+        Habit slots: {slotsAvailable}
       </p>
       <button
         className="button"
-        disabled={!habitSlots}
+        disabled={!slotsAvailable}
         onClick={addHabit}
       >
         Add habit

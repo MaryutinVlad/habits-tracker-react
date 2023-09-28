@@ -1,24 +1,16 @@
-import { useRef } from "react"
-
 export default function AddHabitPopup({
   onSubmit,
-  isOpened,
   onClose
 }) {
 
-  const inputTitle = useRef()
-  const inputValueType = useRef()
+  let inputValue, inputValueType = ''
 
   const addHabit = (e) => {
     e.preventDefault()
 
-    const entryValues = {
-      title: '111',
-      valueType: 'number',
-      value: 0
-    }
+    const initialValue = inputValueType === 'number' ? 0 : 'no'
 
-    onSubmit(JSON.stringify(entryValues))
+    onSubmit(inputValue, inputValueType, initialValue)
   }
 
   const closePopup = () => {
@@ -38,10 +30,11 @@ export default function AddHabitPopup({
     >
       <form
         className="form"
+        name="addHabit"
         onSubmit={addHabit}
       >
-        <input type="text" ref={inputTitle} />
-        <select name="valueTypes" ref={inputValueType}>
+        <input type="text" onKeyUp={(e) => inputValue = e.target.value} required />
+        <select name="valueTypes" onClick={(e) => inputValueType = e.target.value} onKeyDown={(e) => inputValueType = e.target.value} required >
           <option value="">Choose a value type</option>
           <option value="number">Number</option>
           <option value="boolean">Boolean</option>
