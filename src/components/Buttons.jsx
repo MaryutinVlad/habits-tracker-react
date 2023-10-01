@@ -19,11 +19,6 @@ export default function Buttons({
       >
         Add habit
       </button>
-      <button
-        className="button"
-      >
-        Submit
-      </button>
     </div>
   )
 }

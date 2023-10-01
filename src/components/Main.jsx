@@ -34,6 +34,21 @@ export default function Main() {
     togglePopup()
   }
 
+  const saveData = (savedData) => {
+
+    const currentDate = new Date()
+    const entryName = String(currentDate.toLocaleDateString())
+
+    const updatedData = {
+      ...data,
+      [entryName]: savedData
+    }
+
+    localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
+
+    setData(updatedData)
+  }
+
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("habits-tracker"))
 
@@ -51,6 +66,7 @@ export default function Main() {
       />
       <Habits
         data={data}
+        onSaveData={saveData}
       />
       {
         isAddPopupOpened && (

@@ -1,0 +1,22 @@
+.habit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.habit__title {
+  font-family: monospace;
+  font-size: 19px;
+  letter-spacing: 1.1px;
+}
+
+.habit__input-field {
+  max-width: 70px;
+  border: none;
+  border-bottom: .5px solid gray;
+  border-right: .5px solid gray;
+  border-radius: 25px;
+  outline: none;
+  text-align: center;
+}

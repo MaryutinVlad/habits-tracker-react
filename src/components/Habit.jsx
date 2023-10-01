@@ -1,14 +1,29 @@
 export default function Habit({
-  title
+  title,
+  data,
+  onInput
 }) {
+
+  const saveInput = (e) => {
+    onInput(title, e.target.value, data.type)
+  }
+
   return (
-    <div>
-      <span>
+    <div className="habit">
+      <label
+        htmlFor="habitValue"
+        className="habit__title"
+        >
         {title}
-      </span>
-      <span>
-        value
-      </span>
+      </label>
+      <input
+        className="habit__input-field"
+        id="habitValue"
+        type="text"
+        onKeyUp={saveInput}
+        placeholder="none"
+        required
+      />
     </div>
   )
 }

@@ -3,6 +3,7 @@
 @import url('./styles/main/main.css');
 @import url('./styles/main/buttons.css');
 @import url('./styles/main/habits.css');
+@import url('./styles/main/habit.css');
 
 @import url('./styles/popups/overlay.css');
 @import url('./styles/popups/add-habit.css');
