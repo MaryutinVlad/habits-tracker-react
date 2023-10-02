@@ -2,11 +2,13 @@ import { useState, useEffect } from "react"
 
 import Buttons from "./Buttons"
 import Habits from "./Habits"
+import Tasks from "./Tasks"
 import AddHabitPopup from "./AddHabitPopup"
 
 export default function Main() {
 
-  const [ data, setData ] = useState({})
+  const [ habits, setData ] = useState({})
+  const [ tasks, setTasks ] = useState({})
   const [ isAddPopupOpened, setIsAddPopupOpened ] = useState(false)
   const [ slotsAvailable, setSlotsAvailable ] = useState(2)
 
@@ -18,8 +20,8 @@ export default function Main() {
 
     const currentDate = new Date()
     const entryName = String(currentDate.toLocaleDateString())
-    const updatedData = { ...data, [entryName]: {
-      ...data[entryName],
+    const updatedData = { ...habits, [entryName]: {
+      ...habits[entryName],
       [title]: {
         type,
         value
@@ -34,13 +36,13 @@ export default function Main() {
     togglePopup()
   }
 
-  const saveData = (savedData) => {
+  const saveHabits = (savedData) => {
 
     const currentDate = new Date()
     const entryName = String(currentDate.toLocaleDateString())
 
     const updatedData = {
-      ...data,
+      ...habits,
       [entryName]: savedData
     }
 
@@ -50,10 +52,13 @@ export default function Main() {
   }
 
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("habits-tracker"))
 
-    if (savedData) {
-      setData(savedData)
+    if (localStorage.getItem("habits-tracker")) {
+      setData(JSON.parse(localStorage.getItem("habits-tracker")))
+    }
+
+    if (localStorage.getItem("habits-tracker-tasks")) {
+      setTasks(JSON.parse(localStorage.getItem("habits-tracker-tasks")))
     }
   }
   , [])
@@ -65,8 +70,11 @@ export default function Main() {
         slotsAvailable={slotsAvailable}
       />
       <Habits
-        data={data}
-        onSaveData={saveData}
+        data={habits}
+        onSaveData={saveHabits}
+      />
+      <Tasks
+        data={tasks}
       />
       {
         isAddPopupOpened && (

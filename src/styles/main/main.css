@@ -3,3 +3,8 @@
   flex-direction: column;
   margin: 20px auto;
 }
+
+.main__title {
+  font-family: monospace;
+  font-size: 20px;
+}

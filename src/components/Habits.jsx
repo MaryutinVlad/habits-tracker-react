@@ -34,7 +34,7 @@ export default function Habits({
 
   return (
     <div className="habits">
-      <h2>
+      <h2 className="main__title">
         Today is {currentDate.toDateString()}
       </h2>
       <form

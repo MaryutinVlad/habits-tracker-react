@@ -4,6 +4,7 @@
 @import url('./styles/main/buttons.css');
 @import url('./styles/main/habits.css');
 @import url('./styles/main/habit.css');
+@import url('./styles/main/tasks.css');
 
 @import url('./styles/popups/overlay.css');
 @import url('./styles/popups/add-habit.css');
