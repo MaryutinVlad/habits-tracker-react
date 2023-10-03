@@ -10,13 +10,3 @@
   flex-direction: column;
   gap: 20px;
 }
-
-.habits__submit-button {
-  width: 100px;
-  height: 35px;
-  margin: auto;
-  background-color: rgb(93, 228, 183);
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-}

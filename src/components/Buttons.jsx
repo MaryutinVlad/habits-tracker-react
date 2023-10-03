@@ -13,7 +13,7 @@ export default function Buttons({
         Habit slots: {slotsAvailable}
       </p>
       <button
-        className="button"
+        className="buttons__add"
         disabled={!slotsAvailable}
         onClick={addHabit}
       >

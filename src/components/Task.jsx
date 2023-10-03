@@ -1,7 +1,9 @@
-export default function Task() {
+export default function Task({
+  data
+}) {
   return (
-    <div>
-      
-    </div>
+    <li>
+      {data}
+    </li>
   )
 }

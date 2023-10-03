@@ -55,7 +55,7 @@ export default function Habits({
         }
         <button
           type="submit"
-          className="habits__submit-button"
+          className="buttons__submit"
         >
           Submit
         </button>

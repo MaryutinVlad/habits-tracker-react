@@ -4,16 +4,22 @@ import Buttons from "./Buttons"
 import Habits from "./Habits"
 import Tasks from "./Tasks"
 import AddHabitPopup from "./AddHabitPopup"
+import AddTaskPopup from "./AddTaskPopup"
 
 export default function Main() {
 
   const [ habits, setData ] = useState({})
   const [ tasks, setTasks ] = useState({})
   const [ isAddPopupOpened, setIsAddPopupOpened ] = useState(false)
+  const [ isTaskPopupOpened, setIsTaskPopupOpened ] = useState(false)
   const [ slotsAvailable, setSlotsAvailable ] = useState(2)
 
   const togglePopup = () => {
     setIsAddPopupOpened(!isAddPopupOpened)
+  }
+
+  const toggleTaskPopup = () => {
+    setIsTaskPopupOpened(!isTaskPopupOpened)
   }
 
   const addHabit = (title, type, value) => {
@@ -34,6 +40,22 @@ export default function Main() {
     setSlotsAvailable(slotsAvailable - 1)
     
     togglePopup()
+  }
+
+  const addTask = (taskName) => {
+
+    const currentDate = new Date()
+    const entryName = String(currentDate.toLocaleDateString())
+
+    const updatedData = { ...tasks, [taskName]: {
+      date: entryName
+    }}
+
+    localStorage.setItem("habits-tracker-tasks", JSON.stringify(updatedData))
+
+    setTasks(updatedData)
+
+    toggleTaskPopup()
   }
 
   const saveHabits = (savedData) => {
@@ -75,6 +97,7 @@ export default function Main() {
       />
       <Tasks
         data={tasks}
+        onAddTask={toggleTaskPopup}
       />
       {
         isAddPopupOpened && (
@@ -82,6 +105,15 @@ export default function Main() {
             isOpened={isAddPopupOpened}
             onSubmit={addHabit}
             onClose={togglePopup}
+          />
+        )
+      }
+      {
+        isTaskPopupOpened && (
+          <AddTaskPopup
+            isOpened={isTaskPopupOpened}
+            onSubmit={addTask}
+            onClose={toggleTaskPopup}
           />
         )
       }

@@ -4,9 +4,19 @@
   justify-content: space-evenly;
 }
 
-.button {
+.buttons__add {
   background-color: hsl(0, 33%, 74%);
   border: 1px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.buttons__submit {
+  width: 100px;
+  height: 35px;
+  margin-left: auto;
+  background-color: rgb(93, 228, 183);
+  border: none;
   border-radius: 20px;
   cursor: pointer;
 }
