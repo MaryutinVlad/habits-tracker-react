@@ -1,7 +1,7 @@
 import Habit from "./Habit"
 
 export default function Habits({
-  data,
+  habits,
   onSaveData
 }) {
 
@@ -10,10 +10,10 @@ export default function Habits({
   const currentDate = new Date()
   const habitSet = {}
 
-  for (const entry in data) {
-    for (const habit in data[entry]) {
+  for (const entry in habits) {
+    for (const habit in habits[entry]) {
       if (!habitSet[habit]) {
-        habitSet[habit] = data[entry][habit]
+        habitSet[habit] = habits[entry][habit]
       }
     }
   }

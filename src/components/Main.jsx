@@ -8,11 +8,11 @@ import AddTaskPopup from "./AddTaskPopup"
 
 export default function Main() {
 
-  const [ habits, setData ] = useState({})
+  const [ profile, setProfile ] = useState({})
+  const [ habits, setHabits ] = useState({})
   const [ tasks, setTasks ] = useState({})
   const [ isAddPopupOpened, setIsAddPopupOpened ] = useState(false)
   const [ isTaskPopupOpened, setIsTaskPopupOpened ] = useState(false)
-  const [ slotsAvailable, setSlotsAvailable ] = useState(2)
 
   const togglePopup = () => {
     setIsAddPopupOpened(!isAddPopupOpened)
@@ -25,19 +25,31 @@ export default function Main() {
   const addHabit = (title, type, value) => {
 
     const currentDate = new Date()
-    const entryName = String(currentDate.toLocaleDateString())
-    const updatedData = { ...habits, [entryName]: {
-      ...habits[entryName],
-      [title]: {
-        type,
-        value
+    const entryName = currentDate.toLocaleDateString()
+
+    const updatedData = {
+      profile: {
+        ...profile,
+        slotsAvailable: profile.slotsAvailable - 1,
+        slotsTotal: profile.slotsTotal + 1
+      },
+      tasks,
+      habits: {
+        ...habits,
+        [entryName]: {
+          ...habits[entryName],
+          [title]: {
+            type,
+            value
+          }
+        }
       }
-    }}
+    }
 
     localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
 
-    setData(updatedData)
-    setSlotsAvailable(slotsAvailable - 1)
+    setHabits(updatedData.habits)
+    setProfile(updatedData.profile)
     
     togglePopup()
   }
@@ -45,15 +57,22 @@ export default function Main() {
   const addTask = (taskName) => {
 
     const currentDate = new Date()
-    const entryName = String(currentDate.toLocaleDateString())
+    const entryName = currentDate.toLocaleDateString()
 
-    const updatedData = { ...tasks, [taskName]: {
-      date: entryName
-    }}
+    const updatedData = {
+      profile,
+      habits,
+      tasks: {
+        ...tasks,
+        [taskName]: {
+          created: entryName
+        }
+      }
+    }
 
-    localStorage.setItem("habits-tracker-tasks", JSON.stringify(updatedData))
+    localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
 
-    setTasks(updatedData)
+    setTasks(updatedData.tasks)
 
     toggleTaskPopup()
   }
@@ -64,24 +83,43 @@ export default function Main() {
     const entryName = String(currentDate.toLocaleDateString())
 
     const updatedData = {
-      ...habits,
-      [entryName]: savedData
+      profile,
+      tasks,
+      habits: {
+        ...habits,
+        [entryName]: savedData
+      }
     }
 
     localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
 
-    setData(updatedData)
+    setHabits(updatedData.habits)
   }
 
   useEffect(() => {
 
-    if (localStorage.getItem("habits-tracker")) {
-      setData(JSON.parse(localStorage.getItem("habits-tracker")))
+    if (!localStorage.getItem("habits-tracker")) {
+
+      const newProfile = {
+        profile: {
+          created: new Date(),
+          wp: 0,
+          slotsAvailable: 2,
+          slotsTotal: 0
+        },
+        habits: {},
+        tasks: {}
+      }
+
+      localStorage.setItem("habits-tracker", JSON.stringify(newProfile))
     }
 
-    if (localStorage.getItem("habits-tracker-tasks")) {
-      setTasks(JSON.parse(localStorage.getItem("habits-tracker-tasks")))
-    }
+    const userData = JSON.parse(localStorage.getItem("habits-tracker"))
+
+    setHabits(userData.habits)
+    setProfile(userData.profile)
+    setTasks(userData.tasks)
+
   }
   , [])
 
@@ -89,10 +127,10 @@ export default function Main() {
     <main className="main">
       <Buttons
         onAddHabit={togglePopup}
-        slotsAvailable={slotsAvailable}
+        profile={profile}
       />
       <Habits
-        data={habits}
+        habits={habits}
         onSaveData={saveHabits}
       />
       <Tasks

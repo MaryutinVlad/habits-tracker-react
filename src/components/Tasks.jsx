@@ -25,9 +25,9 @@ export default function Tasks({
       <ul className="tasks__container">
         {
           taskArray.map((task) => {
-            console.log(task)
             return (
               <Task
+                key={task}
                 data={task}
               />
             )
