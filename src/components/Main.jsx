@@ -54,7 +54,7 @@ export default function Main() {
     togglePopup()
   }
 
-  const addTask = (taskName) => {
+  const addTask = (taskName, taskPriority, taskComplexity) => {
 
     const currentDate = new Date()
     const entryName = currentDate.toLocaleDateString()
@@ -65,7 +65,9 @@ export default function Main() {
       tasks: {
         ...tasks,
         [taskName]: {
-          created: entryName
+          created: entryName,
+          priority: taskPriority,
+          complexity: taskComplexity
         }
       }
     }
@@ -119,7 +121,6 @@ export default function Main() {
     setHabits(userData.habits)
     setProfile(userData.profile)
     setTasks(userData.tasks)
-
   }
   , [])
 

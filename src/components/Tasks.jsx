@@ -2,12 +2,18 @@ import Task from "./Task"
 
 export default function Tasks({
   data,
-  onAddTask
+  onAddTask,
+  onCompleteTask,
+  onDeleteTask
 }) {
 
   const addTask = () => {
     onAddTask()
   }
+
+  const completeTask = () => {}
+
+  const deleteTask = () => {}
 
   const taskArray = Object.keys(data)
 
@@ -28,7 +34,10 @@ export default function Tasks({
             return (
               <Task
                 key={task}
-                data={task}
+                title={task}
+                data={data[task]}
+                onCompleteTask={completeTask}
+                onDeleteTask={deleteTask}
               />
             )
           })
