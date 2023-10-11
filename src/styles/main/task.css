@@ -2,6 +2,12 @@
   cursor: pointer;
 }
 
+.task_completed {
+  list-style-type: none;
+  color: royalblue;
+  margin-left: -17px;
+}
+
 .task:hover {
   color: rgb(90, 87, 87);
 }

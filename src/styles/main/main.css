@@ -7,4 +7,5 @@
 .main__title {
   font-family: monospace;
   font-size: 20px;
+  grid-area: title;
 }

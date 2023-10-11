@@ -19,4 +19,10 @@
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  grid-area: button;
+}
+
+.buttons__toggler {
+  grid-area: toggler;
+  margin: auto;
 }

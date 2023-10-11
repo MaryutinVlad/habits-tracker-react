@@ -5,7 +5,6 @@ export default function Buttons({
 }) {
 
   const slotCost = [ 0, 0, 3, 5, 8, 12, 17, 25, 35, 50]
-  console.log(profile)
 
   const addHabit = () => {
     onAddHabit()

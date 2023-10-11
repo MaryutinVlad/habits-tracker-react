@@ -1,49 +1,51 @@
 import { useState } from "react"
 
 export default function Task({
-  title,
   data,
   onCompleteTask,
-  onDeleteTask
+  onDeleteTask,
+  completed
 }) {
 
   const [ isTaskExpanded, setIsTaskExpanded ] = useState(false)
 
-  const completeTask = (e) => {
-    onCompleteTask(e.target.value)
+  const completeTask = () => {
+
+    const currentDate = new Date()
+
+    const taskToComplete = {
+      ...data,
+      completedOn: currentDate.toLocaleDateString()
+    }
+
+    onCompleteTask(taskToComplete)
   }
 
-  const deleteTask = (e) => {
-    onDeleteTask(e.target.value)
-  }
+  const deleteTask = () => onDeleteTask(data.title)
 
   return (
-    <>
-      <li
-        className="task"
-        style={data.priority === 'low' ? { color: 'green'} : data.priority === 'high' ? { color: 'red'} : ''}
-        onClick={() => setIsTaskExpanded(!isTaskExpanded)}
-      >
-        {title}
-      </li>
+    <li
+      className="task"
+      style={data.priority === 'low' ? { color: 'green'} : data.priority === 'high' ? { color: 'red'} : ''}
+      onClick={() => setIsTaskExpanded(!isTaskExpanded)}
+    >
+      {data.title}
       {
-        isTaskExpanded && (
+        (isTaskExpanded && !completed) && (
           <>
             <button
               onClick={completeTask}
-              value="done"
             >
               done
             </button>
             <button
               onClick={deleteTask}
-              value="delete"
             >
               delete
             </button>
           </>
         )
       }
-    </>
+    </li>
   )
 }

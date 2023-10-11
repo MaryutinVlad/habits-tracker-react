@@ -1,10 +1,10 @@
 .tasks {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 20px 1fr;
+  grid-template-rows: 65px 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas: 
-    "title button"
-    "tasks tasks";
+    "title toggler button"
+    "tasks tasks tasks";
   margin: 10px 30px 0;
 }
 
