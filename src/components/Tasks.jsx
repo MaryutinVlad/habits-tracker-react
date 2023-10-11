@@ -22,11 +22,21 @@ export default function Tasks({
   const deleteTask = (title) => onDeleteTask(title)
 
   const showCompletionDate = (startedOn, completedOn) => {
+
     const [ stMonth, stDay, stYear ] = startedOn.split('/').map(value => Number(value))
     const [ comMonth, comDay, comYear ] = completedOn.split('/').map(value => Number(value))
-    const yearsPassed = (comYear - stYear) === 0 ? '' : (comYear - stYear) === 1 ? '1 year ' : `${comYear - stYear} years `
-    const monthsPassed = (comMonth - stMonth) === 0 ? '' : (comMonth - stMonth) === 1 ? '1 month ' : `${comMonth - stMonth} months `
-    const daysPassed = (comDay - stDay) === 0 ? '0 days' : (comDay - stDay) === 1 ? '1 day' : `${comDay - stDay} days`
+
+    const yearsPassed = (comYear - stYear) === 0 ? ''
+      : (comYear - stYear) === 1 ? '1 year '
+      : `${comYear - stYear} years `
+      
+    const monthsPassed = (comMonth - stMonth) === 0 ? ''
+      : (comMonth - stMonth) === 1 ? '1 month '
+      : `${comMonth - stMonth} months `
+
+    const daysPassed = (comDay - stDay) === 0 ? '0 days'
+      : (comDay - stDay) === 1 ? '1 day'
+      : `${comDay - stDay} days`
 
     return `${startedOn} - ${completedOn} (for ${yearsPassed}${monthsPassed}${daysPassed})`
   }

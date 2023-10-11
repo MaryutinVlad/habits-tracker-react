@@ -5,7 +5,7 @@ export default function Habit({
 }) {
 
   const saveInput = (e) => {
-    onInput(title, e.target.value, data.type)
+    onInput(title, e.target.value, data)
   }
 
   return (
@@ -19,8 +19,9 @@ export default function Habit({
       <input
         className="habit__input-field"
         id="habitValue"
-        type="text"
+        type={data.type}
         onKeyUp={saveInput}
+        onClick={saveInput}
         placeholder="none"
         required
       />

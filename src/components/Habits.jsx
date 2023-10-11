@@ -5,7 +5,7 @@ export default function Habits({
   onSaveData
 }) {
 
-  const savedData = {}
+  let savedData = {}
 
   const currentDate = new Date()
   const habitSet = {}
@@ -20,16 +20,42 @@ export default function Habits({
 
   const habitArray = Array.from(Object.keys(habitSet))
 
-  const saveInput = (title, value, type) => {
+  const saveInput = (title, value, data) => {
     savedData[title] = {
-      type,
+      ...data,
       value
     }
   }
 
   const saveData = (e) => {
+
     e.preventDefault()
-    onSaveData(savedData)
+
+    let reward = 0
+    const yesterday = new Date(currentDate.setDate(currentDate.getDate() - 1))
+    const yesterdayHabits = habits[yesterday.toLocaleDateString()]
+
+    for (let key in savedData) {
+      const habit = savedData[key]
+
+      habit.value = habit.type === 'boolean' ?  Boolean(habit.value) : Number(habit.value)
+
+      if (habit.value >= habit.requirement) {
+        reward += 1 + habit.streak
+      }
+
+      if (yesterdayHabits) {
+        if (yesterdayHabits[key]) {
+          habit.streak += 1
+        } else {
+          habit.streak = 0
+        }
+      }
+    }
+    onSaveData(savedData, reward)
+
+    savedData = {}
+    e.target.reset()
   }
 
   return (

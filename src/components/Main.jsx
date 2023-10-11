@@ -58,13 +58,16 @@ export default function Main() {
     togglePopup()
   }
 
-  const saveHabits = (savedData) => {
+  const saveHabits = (savedData, reward) => {
 
     const currentDate = new Date()
-    const entryName = String(currentDate.toLocaleDateString())
+    const entryName = currentDate.toLocaleDateString()
 
     const updatedData = {
-      profile,
+      profile: {
+        ...profile,
+        wp: profile.wp + reward
+      },
       tasks,
       habits: {
         ...habits,
@@ -72,9 +75,11 @@ export default function Main() {
       }
     }
 
-    localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
+    console.log(savedData)
 
-    setHabits(updatedData.habits)
+    //localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
+
+    //setHabits(updatedData.habits)
   }
 
   //   ---Tasks section---
@@ -163,6 +168,22 @@ export default function Main() {
     }
 
     const userData = JSON.parse(localStorage.getItem("habits-tracker"))
+
+    /*for (let entry in userData.habits) {
+      for (let habit in userData.habits[entry]) {
+
+        userData.habits[entry][habit].streak = 0
+
+        if (habit === '-Gaming') {
+          userData.habits[entry][habit].requirement = true
+          userData.habits[entry][habit].value = true
+        } else if (habit === 'Coding') {
+          userData.habits[entry][habit].requirement = 3
+          userData.habits[entry][habit].value = 3
+        }
+      }
+    }
+    localStorage.setItem('habits-tracker', JSON.stringify(userData))*/
 
     setHabits(userData.habits)
     setProfile(userData.profile)
