@@ -4,14 +4,14 @@ export default function Buttons({
   profile
 }) {
 
-  const slotCost = [ 0, 0, 3, 5, 8, 12, 17, 25, 35, 50]
+  const slotCost = [ 0, 0, 3, 7, 10, 15, 21, 29, 40, 65]
 
   const addHabit = () => {
     onAddHabit()
   }
 
   const buySlot = () => {
-    onBuySlot()
+    onBuySlot(slotCost[profile.slotsTotal])
   }
 
   return (
@@ -31,10 +31,10 @@ export default function Buttons({
       </button>
       <button
         className="buttons__add"
-        disabled={!profile.wp >= slotCost[profile.slotsTotal - 1]}
+        disabled={!(profile.wp >= slotCost[profile.slotsTotal])}
         onClick={buySlot}
       >
-        Buy slot: {slotCost[profile.slotsTotal + profile.slotsAvailable]} WP
+        Buy slot: {slotCost[profile.slotsTotal]} WP
       </button>
     </div>
   )

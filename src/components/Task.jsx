@@ -26,7 +26,7 @@ export default function Task({
   return (
     <li
       className="task"
-      style={data.priority === 'low' ? { color: 'green'} : data.priority === 'high' ? { color: 'red'} : ''}
+      style={data.priority === 'low' ? { color: 'green'} : data.priority === 'high' ? { color: 'red'} : { color: 'orange'}}
       onClick={() => setIsTaskExpanded(!isTaskExpanded)}
     >
       {data.title}

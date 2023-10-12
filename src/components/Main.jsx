@@ -26,7 +26,7 @@ export default function Main() {
 
   //   ---Habits section---
 
-  const addHabit = (title, type, value) => {
+  const addHabit = ({title, type, req, units}) => {
 
     const currentDate = new Date()
     const entryName = currentDate.toLocaleDateString()
@@ -34,8 +34,7 @@ export default function Main() {
     const updatedData = {
       profile: {
         ...profile,
-        slotsAvailable: profile.slotsAvailable - 1,
-        slotsTotal: profile.slotsTotal + 1
+        slotsAvailable: profile.slotsAvailable - 1
       },
       tasks,
       habits: {
@@ -44,7 +43,10 @@ export default function Main() {
           ...habits[entryName],
           [title]: {
             type,
-            value
+            value: type === 'boolean' ? false : 0,
+            requirement: type === 'boolean' ? Boolean(req) : Number(req),
+            streak: 0,
+            units
           }
         }
       }
@@ -75,11 +77,28 @@ export default function Main() {
       }
     }
 
-    console.log(savedData)
+    localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
 
-    //localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
+    setHabits(updatedData.habits)
+    setProfile(updatedData.profile)
+  }
 
-    //setHabits(updatedData.habits)
+  const buySlot = (slotCost) => {
+
+    const updatedData = {
+      profile: {
+        ...profile,
+        slotsAvailable: profile.slotsAvailable + 1,
+        slotsTotal: profile.slotsTotal + 1,
+        wp: profile.wp - slotCost
+      },
+      habits,
+      tasks
+    }
+
+    setProfile(updatedData.profile)
+
+    localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
   }
 
   //   ---Tasks section---
@@ -169,21 +188,32 @@ export default function Main() {
 
     const userData = JSON.parse(localStorage.getItem("habits-tracker"))
 
-    /*for (let entry in userData.habits) {
+    // manipulations on saved data
+    /*
+    userData.profile.slotsAvailable = 1
+    userData.profile.slotsTotal = 3
+    userData.profile.wp = 3
+    
+    delete userData.habits['10/12/2023']['Language (Suo)']
+    for (let entry in userData.habits) {
       for (let habit in userData.habits[entry]) {
 
-        userData.habits[entry][habit].streak = 0
+        //userData.habits[entry][habit].streak = 0
 
         if (habit === '-Gaming') {
-          userData.habits[entry][habit].requirement = true
-          userData.habits[entry][habit].value = true
+          //userData.habits[entry][habit].requirement = true
+          //userData.habits[entry][habit].value = true
+          userData.habits[entry][habit].units = 'restriction'
         } else if (habit === 'Coding') {
-          userData.habits[entry][habit].requirement = 3
-          userData.habits[entry][habit].value = 3
+          //userData.habits[entry][habit].units = 'hrs'
+          //userData.habits[entry][habit].requirement = 3
+          //userData.habits[entry][habit].value = 3
+        } else if (habit === 'Lan (Suo)') {
+          //userData.habits[entry][habit].units = 'mins'
         }
       }
-    }
-    localStorage.setItem('habits-tracker', JSON.stringify(userData))*/
+    }*/
+    //localStorage.setItem('habits-tracker', JSON.stringify(userData))
 
     setHabits(userData.habits)
     setProfile(userData.profile)
@@ -194,8 +224,9 @@ export default function Main() {
   return (
     <main className="main">
       <Buttons
-        onAddHabit={togglePopup}
         profile={profile}
+        onAddHabit={togglePopup}
+        onBuySlot={buySlot}
       />
       <Habits
         habits={habits}

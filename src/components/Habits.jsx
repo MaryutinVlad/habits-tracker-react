@@ -40,10 +40,6 @@ export default function Habits({
 
       habit.value = habit.type === 'boolean' ?  Boolean(habit.value) : Number(habit.value)
 
-      if (habit.value >= habit.requirement) {
-        reward += 1 + habit.streak
-      }
-
       if (yesterdayHabits) {
         if (yesterdayHabits[key]) {
           habit.streak += 1
@@ -51,7 +47,12 @@ export default function Habits({
           habit.streak = 0
         }
       }
+
+      if (habit.value >= habit.requirement) {
+        reward += 1 + habit.streak
+      }
     }
+
     onSaveData(savedData, reward)
 
     savedData = {}

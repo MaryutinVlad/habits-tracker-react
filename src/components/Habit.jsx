@@ -25,6 +25,13 @@ export default function Habit({
         placeholder="none"
         required
       />
+      {
+        data.units && (
+          <span>
+            {(data.units === 'restriction' || data.units === 'action') ? '' : '/'} {data.requirement} {data.units}
+          </span>
+        )
+      }
     </div>
   )
 }
