@@ -23,7 +23,6 @@ export default function Habit({
         onKeyUp={saveInput}
         onClick={saveInput}
         placeholder="none"
-        required
       />
       {
         data.units && (

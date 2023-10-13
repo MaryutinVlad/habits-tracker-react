@@ -42,7 +42,7 @@ export default function Habits({
 
       if (yesterdayHabits) {
         if (yesterdayHabits[key]) {
-          habit.streak += 1
+          habit.streak = yesterdayHabits[key].streak + 1
         } else {
           habit.streak = 0
         }

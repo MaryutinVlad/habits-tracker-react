@@ -73,7 +73,10 @@ export default function Main() {
       tasks,
       habits: {
         ...habits,
-        [entryName]: savedData
+        [entryName]: {
+          ...habits[entryName],
+          ...savedData
+        }
       }
     }
 
@@ -195,6 +198,13 @@ export default function Main() {
     userData.profile.wp = 3
     
     delete userData.habits['10/12/2023']['Language (Suo)']
+    userData.habits['10/12/2023']['Lang (Suo)'] = {
+      requirement: 30,
+      streak: 0,
+      type: 'number',
+      units: 'mins',
+      value: 30
+    } 
     for (let entry in userData.habits) {
       for (let habit in userData.habits[entry]) {
 
@@ -203,7 +213,7 @@ export default function Main() {
         if (habit === '-Gaming') {
           //userData.habits[entry][habit].requirement = true
           //userData.habits[entry][habit].value = true
-          userData.habits[entry][habit].units = 'restriction'
+          //userData.habits[entry][habit].units = 'restriction'
         } else if (habit === 'Coding') {
           //userData.habits[entry][habit].units = 'hrs'
           //userData.habits[entry][habit].requirement = 3
@@ -213,7 +223,7 @@ export default function Main() {
         }
       }
     }*/
-    //localStorage.setItem('habits-tracker', JSON.stringify(userData))
+    localStorage.setItem('habits-tracker', JSON.stringify(userData))
 
     setHabits(userData.habits)
     setProfile(userData.profile)
