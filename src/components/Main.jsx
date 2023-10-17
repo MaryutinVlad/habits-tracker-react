@@ -10,6 +10,7 @@ export default function Main() {
 
   const [ profile, setProfile ] = useState({})
   const [ habits, setHabits ] = useState({})
+  const [ newHabits, setNewHabits ] = useState([])
   const [ tasks, setTasks ] = useState({completed: [], available: []})
   const [ isAddPopupOpened, setIsAddPopupOpened ] = useState(false)
   const [ isTaskPopupOpened, setIsTaskPopupOpened ] = useState(false)
@@ -192,6 +193,7 @@ export default function Main() {
     const userData = JSON.parse(localStorage.getItem("habits-tracker"))
 
     // manipulations on saved data
+
     /*
     userData.profile.slotsAvailable = 1
     userData.profile.slotsTotal = 3
@@ -204,26 +206,14 @@ export default function Main() {
       type: 'number',
       units: 'mins',
       value: 30
-    } 
-    for (let entry in userData.habits) {
-      for (let habit in userData.habits[entry]) {
-
-        //userData.habits[entry][habit].streak = 0
-
-        if (habit === '-Gaming') {
-          //userData.habits[entry][habit].requirement = true
-          //userData.habits[entry][habit].value = true
-          //userData.habits[entry][habit].units = 'restriction'
-        } else if (habit === 'Coding') {
-          //userData.habits[entry][habit].units = 'hrs'
-          //userData.habits[entry][habit].requirement = 3
-          //userData.habits[entry][habit].value = 3
-        } else if (habit === 'Lan (Suo)') {
-          //userData.habits[entry][habit].units = 'mins'
-        }
-      }
-    }*/
-    localStorage.setItem('habits-tracker', JSON.stringify(userData))
+    } */
+    let initialDay = 10
+    userData.habits.map(habit => {
+      habit.created = `10/${initialDay}/ 2023`
+      initialDay++
+    })
+    console.log(userData.habits)
+    //localStorage.setItem('habits-tracker', JSON.stringify(userData))
 
     setHabits(userData.habits)
     setProfile(userData.profile)
@@ -240,6 +230,7 @@ export default function Main() {
       />
       <Habits
         habits={habits}
+        newHabits={newHabits}
         onSaveData={saveHabits}
       />
       <Tasks

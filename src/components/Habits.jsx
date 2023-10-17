@@ -2,13 +2,21 @@ import Habit from "./Habit"
 
 export default function Habits({
   habits,
+  newHabits,
   onSaveData
 }) {
+
+  console.log(newHabits)
 
   let savedData = {}
 
   const currentDate = new Date()
   const habitSet = {}
+
+  let lastEntry = newHabits.length ? newHabits[newHabits.length - 1] : {
+    created: currentDate.toLocaleDateString(),
+    habits: {}
+  }
 
   for (const entry in habits) {
     for (const habit in habits[entry]) {
@@ -19,6 +27,8 @@ export default function Habits({
   }
 
   const habitArray = Array.from(Object.keys(habitSet))
+  const newHabitArray = [...Object.keys(lastEntry.habits)]
+  console.log(lastEntry)
 
   const saveInput = (title, value, data) => {
     savedData[title] = {
@@ -69,12 +79,13 @@ export default function Habits({
         onSubmit={saveData}
       >
         {
-          habitArray.map((habit) => {
+          newHabitArray.map((habit) => {
             return (
               <Habit
                 key={habit}
                 title={habit}
-                data={habitSet[habit]}
+                createdOn = {lastEntry.created}
+                data={lastEntry.habits[habit]}
                 onInput={saveInput}
               />
             )

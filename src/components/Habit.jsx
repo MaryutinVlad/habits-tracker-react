@@ -1,8 +1,11 @@
 export default function Habit({
   title,
   data,
+  createdOn,
   onInput
 }) {
+
+  const currentDate = new Date()
 
   const saveInput = (e) => {
     onInput(title, e.target.value, data)
@@ -16,14 +19,32 @@ export default function Habit({
         >
         {title}
       </label>
-      <input
-        className="habit__input-field"
-        id="habitValue"
-        type={data.type}
-        onKeyUp={saveInput}
-        onClick={saveInput}
-        placeholder="none"
+      {
+        currentDate.toLocaleDateString() === createdOn ? data.value === data.requirement ? (
+          <span
+            id="habitValue"
+          >
+            done
+          </span>
+        ) : (
+          <input
+          className="habit__input-field"
+          id="habitValue"
+          type={data.type}
+          onKeyUp={saveInput}
+          onClick={saveInput}
+          placeholder={String(data.value)}
       />
+        ) : (
+          <input
+            className="habit__input-field"
+            id="habitValue"
+            type={data.type}
+            onKeyUp={saveInput}
+            onClick={saveInput}
+            placeholder="none"
+        />)
+      }
       {
         data.units && (
           <span>
