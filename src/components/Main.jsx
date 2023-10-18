@@ -10,7 +10,6 @@ export default function Main() {
 
   const [ profile, setProfile ] = useState({})
   const [ habits, setHabits ] = useState({})
-  const [ newHabits, setNewHabits ] = useState([])
   const [ tasks, setTasks ] = useState({completed: [], available: []})
   const [ isAddPopupOpened, setIsAddPopupOpened ] = useState(false)
   const [ isTaskPopupOpened, setIsTaskPopupOpened ] = useState(false)
@@ -72,15 +71,15 @@ export default function Main() {
         wp: profile.wp + reward
       },
       tasks,
-      habits: {
+      habits: [
         ...habits,
-        [entryName]: {
-          ...habits[entryName],
-          ...savedData
+        {
+          created: entryName,
+          habits: savedData
         }
-      }
+      ]
     }
-
+    console.log(updatedData)
     localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
 
     setHabits(updatedData.habits)
@@ -207,12 +206,11 @@ export default function Main() {
       units: 'mins',
       value: 30
     } */
-    let initialDay = 10
+    /*let initialDay = 10
     userData.habits.map(habit => {
       habit.created = `10/${initialDay}/ 2023`
       initialDay++
-    })
-    console.log(userData.habits)
+    })*/
     //localStorage.setItem('habits-tracker', JSON.stringify(userData))
 
     setHabits(userData.habits)
@@ -230,7 +228,6 @@ export default function Main() {
       />
       <Habits
         habits={habits}
-        newHabits={newHabits}
         onSaveData={saveHabits}
       />
       <Tasks

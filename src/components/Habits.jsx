@@ -2,33 +2,19 @@ import Habit from "./Habit"
 
 export default function Habits({
   habits,
-  newHabits,
   onSaveData
 }) {
-
-  console.log(newHabits)
 
   let savedData = {}
 
   const currentDate = new Date()
-  const habitSet = {}
 
-  let lastEntry = newHabits.length ? newHabits[newHabits.length - 1] : {
+  let lastEntry = habits.length ? habits[habits.length - 1] : {
     created: currentDate.toLocaleDateString(),
     habits: {}
   }
 
-  for (const entry in habits) {
-    for (const habit in habits[entry]) {
-      if (!habitSet[habit]) {
-        habitSet[habit] = habits[entry][habit]
-      }
-    }
-  }
-
-  const habitArray = Array.from(Object.keys(habitSet))
   const newHabitArray = [...Object.keys(lastEntry.habits)]
-  console.log(lastEntry)
 
   const saveInput = (title, value, data) => {
     savedData[title] = {
@@ -43,16 +29,18 @@ export default function Habits({
 
     let reward = 0
     const yesterday = new Date(currentDate.setDate(currentDate.getDate() - 1))
-    const yesterdayHabits = habits[yesterday.toLocaleDateString()]
+    const lastHabitsEntry = habits.length > 0 ? habits[habits.length - 1] : []
+    const isDayInStreak = lastHabitsEntry ? ( lastHabitsEntry.created === yesterday ? true : false ) : false
+    console.log(yesterday)
 
     for (let key in savedData) {
       const habit = savedData[key]
 
       habit.value = habit.type === 'boolean' ?  Boolean(habit.value) : Number(habit.value)
 
-      if (yesterdayHabits) {
-        if (yesterdayHabits[key]) {
-          habit.streak = yesterdayHabits[key].streak + 1
+      if (lastHabitsEntry) {
+        if (lastHabitsEntry[key]) {
+          habit.streak = lastHabitsEntry[key].streak + 1
         } else {
           habit.streak = 0
         }
