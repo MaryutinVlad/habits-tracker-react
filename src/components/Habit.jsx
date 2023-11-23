@@ -48,7 +48,7 @@ export default function Habit({
       {
         data.units && (
           <span>
-            {(data.units === 'restriction' || data.units === 'action') ? '' : '/'} {data.requirement} {data.units}
+            {(data.units === 'restriction' || data.units === 'action') ? '' : `${data.value} /`} {data.requirement} {data.units}
           </span>
         )
       }

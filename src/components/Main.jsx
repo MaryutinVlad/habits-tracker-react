@@ -80,7 +80,7 @@ export default function Main() {
       ]
     }
     console.log(updatedData)
-    localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
+    //localStorage.setItem("habits-tracker", JSON.stringify(updatedData))
 
     setHabits(updatedData.habits)
     setProfile(updatedData.profile)
@@ -190,6 +190,7 @@ export default function Main() {
     }
 
     const userData = JSON.parse(localStorage.getItem("habits-tracker"))
+    //userData.habits = userData.habits.filter( (item, index) => index <= 5)
 
     // manipulations on saved data
 
@@ -211,6 +212,7 @@ export default function Main() {
       habit.created = `10/${initialDay}/ 2023`
       initialDay++
     })*/
+
     //localStorage.setItem('habits-tracker', JSON.stringify(userData))
 
     setHabits(userData.habits)

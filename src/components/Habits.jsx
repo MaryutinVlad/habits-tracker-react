@@ -17,6 +17,7 @@ export default function Habits({
   const newHabitArray = [...Object.keys(lastEntry.habits)]
 
   const saveInput = (title, value, data) => {
+
     savedData[title] = {
       ...data,
       value
@@ -28,10 +29,9 @@ export default function Habits({
     e.preventDefault()
 
     let reward = 0
-    const yesterday = new Date(currentDate.setDate(currentDate.getDate() - 1))
-    const lastHabitsEntry = habits.length > 0 ? habits[habits.length - 1] : []
+    const yesterday = new Date(currentDate.getDate() - 1)
+    const lastHabitsEntry = habits.length > 0 ? habits[habits.length - 1] : {created: currentDate.toLocaleDateString()}
     const isDayInStreak = lastHabitsEntry ? ( lastHabitsEntry.created === yesterday ? true : false ) : false
-    console.log(yesterday)
 
     for (let key in savedData) {
       const habit = savedData[key]
@@ -48,6 +48,23 @@ export default function Habits({
 
       if (habit.value >= habit.requirement) {
         reward += 1 + habit.streak
+      }
+    }
+
+    if (lastHabitsEntry.created !== currentDate.toLocaleDateString()) {
+      for (const habit in lastHabitsEntry.habits) {
+        if (!savedData[habit]) {
+          savedData[habit] = lastHabitsEntry.habits[habit]
+          savedData[habit].value = savedData[habit].type === 'number' ? 0 : false
+        }
+      }
+    } else {
+      for (const habit in lastHabitsEntry.habits) {
+        if (!savedData[habit]) {
+          savedData[habit] = lastHabitsEntry.habits[habit]
+        } else {
+          savedData[habit].value += lastHabitsEntry.habits[habit].value
+        }
       }
     }
 
