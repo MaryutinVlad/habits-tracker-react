@@ -2,12 +2,20 @@ import Habit from "./Habit"
 
 export default function Habits({
   habits,
+  current,
   onSaveData
 }) {
 
   let savedData = {}
 
   const currentDate = new Date()
+
+  /*if (current.created !== currentDate.toDateString()) {
+    current.created = currentDate.toDateString()
+    for (const habit in current.habits) {
+      current.habits[habit].value = current.habits[habit].type === 'number' ? 0 : false
+    }
+  }*/
 
   let lastEntry = habits.length ? habits[habits.length - 1] : {
     created: currentDate.toLocaleDateString(),
@@ -27,7 +35,6 @@ export default function Habits({
   const saveData = (e) => {
 
     e.preventDefault()
-
     let reward = 0
     const yesterday = new Date(currentDate.getDate() - 1)
     const lastHabitsEntry = habits.length > 0 ? habits[habits.length - 1] : {created: currentDate.toLocaleDateString()}
@@ -52,12 +59,14 @@ export default function Habits({
     }
 
     if (lastHabitsEntry.created !== currentDate.toLocaleDateString()) {
+      //console.log(savedData)
       for (const habit in lastHabitsEntry.habits) {
         if (!savedData[habit]) {
           savedData[habit] = lastHabitsEntry.habits[habit]
           savedData[habit].value = savedData[habit].type === 'number' ? 0 : false
         }
       }
+      //console.log(savedData)
     } else {
       for (const habit in lastHabitsEntry.habits) {
         if (!savedData[habit]) {
@@ -89,8 +98,8 @@ export default function Habits({
               <Habit
                 key={habit}
                 title={habit}
-                createdOn = {lastEntry.created}
-                data={lastEntry.habits[habit]}
+                createdOn = {current.created}
+                data={current.habits[habit]}
                 onInput={saveInput}
               />
             )

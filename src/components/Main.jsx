@@ -13,6 +13,8 @@ export default function Main() {
   const [ tasks, setTasks ] = useState({completed: [], available: []})
   const [ isAddPopupOpened, setIsAddPopupOpened ] = useState(false)
   const [ isTaskPopupOpened, setIsTaskPopupOpened ] = useState(false)
+  const currentDate = new Date()
+  const entryName = currentDate.toLocaleDateString()
 
   //   ---Popups section---
 
@@ -27,9 +29,6 @@ export default function Main() {
   //   ---Habits section---
 
   const addHabit = ({title, type, req, units}) => {
-
-    const currentDate = new Date()
-    const entryName = currentDate.toLocaleDateString()
 
     const updatedData = {
       profile: {
@@ -61,9 +60,6 @@ export default function Main() {
   }
 
   const saveHabits = (savedData, reward) => {
-
-    const currentDate = new Date()
-    const entryName = currentDate.toLocaleDateString()
 
     const updatedData = {
       profile: {
@@ -107,9 +103,6 @@ export default function Main() {
   //   ---Tasks section---
 
   const addTask = (taskName, taskPriority, taskComplexity) => {
-
-    const currentDate = new Date()
-    const entryName = currentDate.toLocaleDateString()
 
     const updatedData = {
       profile,
@@ -230,6 +223,7 @@ export default function Main() {
       />
       <Habits
         habits={habits}
+        current={habits.length > 0 ? habits[habits.length - 1] : {created: entryName}}
         onSaveData={saveHabits}
       />
       <Tasks
