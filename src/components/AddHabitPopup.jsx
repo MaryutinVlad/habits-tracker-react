@@ -5,32 +5,33 @@ export default function AddHabitPopup({
   onClose
 }) {
 
-  const [ showRequirements, setShowRequirements ] = useState(false)
-  const [ inputValues, setInputValues ] = useState({
-    title: '',
-    type: '',
-    req: 0,
-    units: ''
-  })
+  const [ isNumberType, setIsNumberType ] = useState(false)
 
   const addHabit = (e) => {
     e.preventDefault()
 
+    const inputValues = {}
+
+    for (let i = 0; i < e.target.length - 1; i++) {
+
+      const inputField = e.target[i]
+
+      inputValues[inputField.name] = inputField.value
+    }
+
+    inputValues.streak = 0
+
     if (inputValues.type === 'boolean') {
-      setInputValues({
-        ...inputValues,
-        req: true 
-      })
+
+      inputValues.req = true
+      inputValues.value = false
+
+    } else {
+      inputValues.req = Number(inputValues.req)
+      inputValues.value = 0
     }
 
     onSubmit(inputValues)
-
-    setInputValues({
-      title: '',
-      type: '',
-      req: 0,
-      units: ''
-    })
   }
 
   const closePopup = () => {
@@ -55,41 +56,26 @@ export default function AddHabitPopup({
       >
         <input
           type="text"
+          name="title"
           placeholder="type in habit name"
-          onKeyUp={(e) =>
-            setInputValues({
-              ...inputValues,
-              title: e.target.value
-            })
-          }
           required
         />
         <select
-          name="valueTypes"
+          name="type"
           onClick={(e) => {
 
-            setInputValues({
-              ...inputValues,
-              type: e.target.value
-            })
-
             if (e.target.value === 'number') {
-              setShowRequirements(true)
+              setIsNumberType(true)
             } else {
-              setShowRequirements(false)
+              setIsNumberType(false)
             }
           }}
           onKeyUp={(e) => {
-            
-            setInputValues({
-              ...inputValues,
-              type: e.target.value
-            })
 
             if (e.target.value === 'number') {
-              setShowRequirements(true)
+              setIsNumberType(true)
             } else {
-              setShowRequirements(false)
+              setIsNumberType(false)
             }
           }}
           required
@@ -105,23 +91,9 @@ export default function AddHabitPopup({
           </option>
         </select>
         {
-          inputValues.type === "boolean" ? (
+          !isNumberType ? (
             <select
-              name="valueUnitsBool"
-              onClick={(e) =>
-
-                setInputValues({
-                  ...inputValues,
-                  units: e.target.value
-                })
-              }
-              onKeyUp={(e) =>
-
-                setInputValues({
-                  ...inputValues,
-                  units: e.target.value
-                })
-              }
+              name="units"
             >
               <option value="restriction">
                 Restriction
@@ -132,35 +104,19 @@ export default function AddHabitPopup({
             </select>
           ) : (
             <input
+              name="units"
               type="text"
               placeholder="type in value units"
-              onKeyUp={(e) =>
-                setInputValues({
-                  ...inputValues,
-                  units: e.target.value
-                })
-              }
               required
             />
           )
         }
         {
-          showRequirements && (
+          isNumberType && (
             <input
+              name="req"
               type="number"
               placeholder="type in completion value"
-              onClick={(e) =>
-                setInputValues({
-                  ...inputValues,
-                  req: e.target.value
-                })
-              }
-              onKeyUp={(e) =>
-                setInputValues({
-                  ...inputValues,
-                  req: e.target.value
-                })
-              }
               required
             />
           )
