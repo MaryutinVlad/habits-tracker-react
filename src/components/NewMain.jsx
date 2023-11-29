@@ -12,8 +12,6 @@ export default function NewMain(
       {
         habits.length > 0 ? (
           <>
-            <Habits/>
-            <Tasks/>
           </>
         ) : (
           <>

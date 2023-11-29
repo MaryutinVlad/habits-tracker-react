@@ -43,18 +43,25 @@ export default function App() {
   }
 
   const addHabit = (inputValues) => {
-    console.log(inputValues)
-    const updatedData = {
-      ...user,
-      habits: [
-        ...user.habits,
-        {
-          //wrong way, you need to avoid duplication on the same date
-        }
-      ]
+    const updatedData = user
+
+    if (updatedData.habits.length) {
+      if (updatedData.habits[updatedData.habits.length - 1].created === currentDate.toLocaleDateString()) {
+        updatedData.habits[updatedData.habits.length - 1].entries.push(inputValues)
+      }
+    } else {
+      updatedData.habits.push({
+        created: currentDate.toLocaleDateString(),
+        entries: [inputValues]
+      })
     }
 
-    //localStorage.setItem("habits-tracker-new", JSON.stringify())
+    updatedData.profile.slotsAvailable -= 1
+    updatedData.profile.slotsTotal += 1
+
+    setUser(updatedData)
+    localStorage.setItem("habits-tracker-new", JSON.stringify(updatedData))
+
     toggleAddPopup()
   }
 
