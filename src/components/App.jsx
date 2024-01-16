@@ -65,6 +65,17 @@ export default function App() {
     toggleAddPopup()
   }
 
+  const saveHabits = (updatedData) => {
+
+    const updatedUser = {
+      ...user,
+      habits: updatedData
+    }
+
+    setUser(updatedUser)
+    localStorage.setItem("habits-tracker-new", JSON.stringify(updatedUser))
+  }
+
   return (
     <div className='page'>
       <Header
@@ -77,6 +88,7 @@ export default function App() {
         hasProfile && <NewMain
           habits={user.habits}
           tasks={user.tasks}
+          onSaveHabits={saveHabits}
         />
        }
       <Footer/>

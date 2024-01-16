@@ -1,14 +1,17 @@
 export default function Habit({
-  title,
-  data,
+  habit,
   createdOn,
   onInput
 }) {
 
+  console.log(habit)
   const currentDate = new Date()
 
   const saveInput = (e) => {
-    onInput(title, e.target.value, data)
+    onInput({
+      ...habit,
+      value: habit.req === 'number' ? Number(e.target.value) : Boolean(e.target.value)
+    })
   }
 
   return (
@@ -17,10 +20,10 @@ export default function Habit({
         htmlFor="habitValue"
         className="habit__title"
         >
-        {title}
+        {habit.title}
       </label>
       {
-        currentDate.toLocaleDateString() === createdOn ? data.value === data.requirement ? (
+        currentDate.toLocaleDateString() === createdOn ? habit.value === habit.requirement ? (
           <span
             id="habitValue"
           >
@@ -30,25 +33,25 @@ export default function Habit({
           <input
           className="habit__input-field"
           id="habitValue"
-          type={data.type}
+          type={habit.type}
           onKeyUp={saveInput}
           onClick={saveInput}
-          placeholder={String(data.value)}
+          placeholder={String(habit.value)}
       />
         ) : (
           <input
             className="habit__input-field"
             id="habitValue"
-            type={data.type}
+            type={habit.type}
             onKeyUp={saveInput}
             onClick={saveInput}
             placeholder="none"
         />)
       }
       {
-        data.units && (
+        habit.units && (
           <span>
-            {(data.units === 'restriction' || data.units === 'action') ? '' : `${data.value} /`} {data.requirement} {data.units}
+            {(habit.units === 'restriction' || habit.units === 'action') ? '' : `${habit.value} /`} {habit.requirement} {habit.units}
           </span>
         )
       }
